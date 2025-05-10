@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
-use App\Http\Services\AuthService;
 use Illuminate\Http\Request;
+use AuthService;
 
 class AuthController extends Controller
 {

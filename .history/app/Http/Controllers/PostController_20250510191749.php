@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\PostEditRequest;
 use App\Http\Requests\StorePostRequest;
-use App\Http\Services\PostService;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use PostService;
 
 class PostController extends Controller
 {
@@ -41,23 +42,22 @@ class PostController extends Controller
 
     public function update(PostEditRequest $request, $id)
     {
-        try {
-            $validated = $request->validated();
-            $result = $this->postService->updateService($validated, $id);
+        $validated = $request->validated();
+        $result = $this->postService->updateService($validated, $id);
 
-            return response()->json(['data' => $result], $result['status']);
-        } catch (ErrorException $err) {
-            return $err->throw($request);
-        }
+        return response()->json(['data' => $result], $result['status']);
+    } catch(ErrorException $err) {
+        return $err->throw($request);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        try {
-            $result = $this->postService->destroyService($id);
-            return response()->json(['data' => $result], $result['status']);
-        } catch (ErrorException $err) {
-            return $err->throw($request);
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->json(['message' => 'Post not found'], 404);
         }
+
+        $post->delete();
+        return response()->json(['message' => 'Post deleted']);
     }
 }

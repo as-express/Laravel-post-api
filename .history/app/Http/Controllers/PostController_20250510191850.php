@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\PostEditRequest;
 use App\Http\Requests\StorePostRequest;
-use App\Http\Services\PostService;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use PostService;
 
 class PostController extends Controller
 {
@@ -54,8 +55,6 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            $result = $this->postService->destroyService($id);
-            return response()->json(['data' => $result], $result['status']);
         } catch (ErrorException $err) {
             return $err->throw($request);
         }

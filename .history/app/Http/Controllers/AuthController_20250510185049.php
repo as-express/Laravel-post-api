@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
-use App\Http\Services\AuthService;
+use App\Jobs\EmailJob;
 use Illuminate\Http\Request;
+use App\Models\User;
+use AuthService;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorException;
-use App\Http\Services\UserService;
 use Illuminate\Http\Request;
+use App\Models\User;
+use UserService;
 
 class UserController extends Controller
 {

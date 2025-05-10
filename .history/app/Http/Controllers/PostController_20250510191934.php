@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\PostEditRequest;
 use App\Http\Requests\StorePostRequest;
-use App\Http\Services\PostService;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use PostService;
 
 class PostController extends Controller
 {

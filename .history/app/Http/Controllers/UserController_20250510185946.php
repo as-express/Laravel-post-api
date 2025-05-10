@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorException;
-use App\Http\Services\UserService;
 use Illuminate\Http\Request;
+use App\Models\User;
+use UserService;
 
 class UserController extends Controller
 {
@@ -20,8 +21,6 @@ class UserController extends Controller
         try {
             $userId =  $request->user()->id;
             $result = $this->userService->getProfileService($userId);
-
-            return response()->json(['data' => $result['data']], $result['status']);
         } catch (ErrorException $err) {
             return $err->throw($request);
         }
