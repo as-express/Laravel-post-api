@@ -4,29 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
-use App\Jobs\EmailJob;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
     public function register(AuthRegisterRequest $request) {
         $validated = $request->validated();
-        $isExist = User::where( 'email', $validated['email'])->first();
+        $isExist = User::where('email', $validated['email'])->first();
         if($isExist) {
             return response()->json(['message' => 'Email already exists'], 400);
         }
 
         $validated['password'] = Hash::make($validated['password']);
-        $user = User::create([
-            'email'=> $validated['email'],
-            'name' => $validated['name'],
-            'password' => $validated['password'],
-            'verification_token' => Str::random(32),
-        ]);
-        EmailJob::dispatch($user);
+        $user = User::create($validated);
 
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['data' => $user, 'token' => $token,], 201);
@@ -52,16 +45,5 @@ class AuthController extends Controller
     public function logout(Request $request) {
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logout successfully'], 200);
-    }
-
-    public function verify(Request $request){
-        $user = User::where('verification_token', $request->token)->firstOrFail();
-        $user->email_verified_at = now();
-        $user->save();
-        $token = $user->createToken('auth_token')->plainTextToken;
-        return response()->json([
-            'message' => 'Email verified',
-            'token' => $token
-        ]);
     }
 }

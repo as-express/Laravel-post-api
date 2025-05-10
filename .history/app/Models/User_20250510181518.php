@@ -23,7 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'verification_token',
     ];
 
     /**
@@ -34,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'verification_token',
     ];
 
     public function posts()  {

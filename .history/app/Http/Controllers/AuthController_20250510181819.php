@@ -8,7 +8,6 @@ use App\Jobs\EmailJob;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -24,7 +23,7 @@ class AuthController extends Controller
             'email'=> $validated['email'],
             'name' => $validated['name'],
             'password' => $validated['password'],
-            'verification_token' => Str::random(32),
+            verification_token' => Str::random(32),
         ]);
         EmailJob::dispatch($user);
 

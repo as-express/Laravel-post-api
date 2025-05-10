@@ -8,7 +8,7 @@ use App\Jobs\EmailJob;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Str;
 
 class AuthController extends Controller
 {

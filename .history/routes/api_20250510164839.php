@@ -20,4 +20,3 @@ Route::prefix('/post')->middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/user/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
-Route::get('/email-verify', [AuthController::class, 'verify'])->name('verify');

@@ -8,7 +8,6 @@ use App\Jobs\EmailJob;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -20,12 +19,7 @@ class AuthController extends Controller
         }
 
         $validated['password'] = Hash::make($validated['password']);
-        $user = User::create([
-            'email'=> $validated['email'],
-            'name' => $validated['name'],
-            'password' => $validated['password'],
-            'verification_token' => Str::random(32),
-        ]);
+        $user = User::create($validated);
         EmailJob::dispatch($user);
 
         $token = $user->createToken('auth_token')->plainTextToken;
