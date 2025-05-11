@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorException;
 use App\Http\Requests\PostEditRequest;
 use App\Http\Requests\StorePostRequest;
-use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     protected $postService;
 
-    public function __construct(PostService $postService)
+    public function __construct(\App\Services\PostService $postService)
     {
         $this->postService = $postService;
     }
